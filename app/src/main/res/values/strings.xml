@@ -4,6 +4,9 @@
     <string name="app_name">McDistance</string>
     <string name="mcdistance">McDistance: %d</string>
     <string name="mcdistanceMiles">Miles: %.2f</string>
+    <string name="view_mcdistance">View McDistance</string>
+    <string name="calculate_distance">Calculate Distance</string>
+    <string name="directions">Get Directions</string>
     <string name="action_settings">Settings</string>
 
 </resources>

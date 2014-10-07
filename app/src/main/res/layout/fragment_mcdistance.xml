@@ -9,12 +9,43 @@
         android:id="@+id/mcdistanceTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/mcdistance" />
+        android:text="@string/mcdistance"
+        android:gravity="center"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/milesTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/mcdistanceMiles" />
+        android:text="@string/mcdistanceMiles"
+        android:gravity="center"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_weight="2">
+
+        <Button
+            android:id="@+id/view_mcdistance_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_mcdistance" />
+
+        <Button
+            android:id="@+id/calculate_distance_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/calculate_distance" />
+
+        <Button
+            android:id="@+id/directions_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/directions" />
+
+    </LinearLayout>
 
 </LinearLayout>
