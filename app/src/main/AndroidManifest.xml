@@ -12,10 +12,17 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CalculateDistanceActivity"
+            android:label="McDistance">
+        </activity>
+        <activity android:name=".DirectionsActivity"
+            android:label="McDistance">
+        </activity>
+        <activity android:name=".ViewMcDistanceActivity"
+            android:label="McDistance">
+        </activity>
     </application>
-
 </manifest>
