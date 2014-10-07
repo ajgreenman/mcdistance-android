@@ -11,4 +11,4 @@ Two people in two different locations can both have a McDistance of 1. However, 
 
 What does this app do?
 
-This app will calculate your McDistance and even provide handy conversions to the units of your choice (such as miles or kilometers). In addition, you can select locations on a map and the McDistance to that location will be calculated. That location's own McDistance will be calculated as well.
+This app will calculate your McDistance and even provide handy conversions to the units of your choice (such as miles or kilometers). You can use a map to calculate how many McDistances it is to the location of your choice, and you can get directions to the nearest McDonald's.
