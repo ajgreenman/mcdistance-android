@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">McDistance</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="mcdistance">McDistance: %d</string>
+    <string name="mcdistanceMiles">Miles: %.2f</string>
     <string name="action_settings">Settings</string>
 
 </resources>
