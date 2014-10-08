@@ -14,6 +14,12 @@ public class McDistanceFragment extends Fragment {
     Button mViewMcDistanceButton, mCalculateDistanceButton, mGetDirectionsButton;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mcdistance, parent, false);
 
