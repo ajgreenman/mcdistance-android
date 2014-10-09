@@ -10,13 +10,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class McDistanceFragment extends Fragment {
-    TextView mMcDistanceTextView, mMilesTextView;
-    Button mViewMcDistanceButton, mCalculateDistanceButton, mGetDirectionsButton;
+    private McDistanceManager mMcDistanceManager;
+    private TextView mMcDistanceTextView, mMilesTextView;
+    private Button mViewMcDistanceButton, mCalculateDistanceButton, mGetDirectionsButton,
+            mStartButton, mStopButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        mMcDistanceManager = McDistanceManager.get(getActivity());
     }
 
     @Override
@@ -56,6 +60,35 @@ public class McDistanceFragment extends Fragment {
             }
         });
 
+        mStartButton = (Button) v.findViewById(R.id.startButton);
+        mStartButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mMcDistanceManager.startLocationUpdates();
+                updateUI();
+            }
+        });
+
+        mStopButton = (Button) v.findViewById(R.id.stopButton);
+        mStopButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mMcDistanceManager.stopLocationUpdates();
+                updateUI();
+            }
+        });
+
+        updateUI();
+
         return v;
+    }
+
+    private void updateUI() {
+        boolean started = mMcDistanceManager.isTrackingLocation();
+
+        mStartButton.setEnabled(!started);
+        mStopButton.setEnabled(started);
     }
 }
