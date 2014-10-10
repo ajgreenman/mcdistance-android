@@ -16,9 +16,13 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class McDistanceFragment extends Fragment {
-    private Location mLocation;
+    private static final double MINIMUM_DISTANCE = 50.0;
+
+    private int mMcDistance = 1;
+    private double mDistance = 0.0;
+    private Location mLocation, mFultonLocation;
     private McDistanceManager mMcDistanceManager;
-    private TextView mMcDistanceTextView, mMilesTextView, mLatitudeTextView, mLongitudeTextView;
+    private TextView mMcDistanceTextView, mMetersTextView, mLatitudeTextView, mLongitudeTextView;
     private Button mViewMcDistanceButton, mCalculateDistanceButton, mGetDirectionsButton,
             mStartButton, mStopButton;
 
@@ -27,6 +31,7 @@ public class McDistanceFragment extends Fragment {
         @Override
         protected void onLocationReceived(Context context, Location loc) {
             mLocation = loc;
+            mDistance = mLocation.distanceTo(mFultonLocation);
 
             if(isVisible()) {
                 updateUI();
@@ -40,6 +45,10 @@ public class McDistanceFragment extends Fragment {
         setRetainInstance(true);
 
         mMcDistanceManager = McDistanceManager.get(getActivity());
+
+        mFultonLocation = new Location("Pro J");
+        mFultonLocation.setLatitude(42.96361);
+        mFultonLocation.setLongitude(-85.6974971);
     }
 
     @Override
@@ -47,7 +56,7 @@ public class McDistanceFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_mcdistance, parent, false);
 
         mMcDistanceTextView = (TextView) v.findViewById(R.id.mcdistanceTextView);
-        mMilesTextView = (TextView) v.findViewById(R.id.milesTextView);
+        mMetersTextView = (TextView) v.findViewById(R.id.metersTextView);
         mLatitudeTextView = (TextView) v.findViewById(R.id.latitudeTextView);
         mLongitudeTextView = (TextView) v.findViewById(R.id.longitudeTextView);
 
@@ -125,6 +134,15 @@ public class McDistanceFragment extends Fragment {
         if(mLocation != null) {
             mLatitudeTextView.setText(Double.toString(mLocation.getLatitude()));
             mLongitudeTextView.setText(Double.toString(mLocation.getLongitude()));
+
+            if(mDistance <= MINIMUM_DISTANCE) {
+                mMcDistance = 0;
+            } else {
+                mMcDistance = 1;
+            }
+
+            mMcDistanceTextView.setText("McDistance: " + mMcDistance);
+            mMetersTextView.setText("Meters: " + mDistance);
         }
 
         mStartButton.setEnabled(!started);

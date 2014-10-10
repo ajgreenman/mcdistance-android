@@ -14,12 +14,12 @@
         android:text="@string/mcdistance" />
 
     <TextView
-        android:id="@+id/milesTextView"
+        android:id="@+id/metersTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/mcdistanceMiles" />
+        android:text="@string/mcdistanceMeters" />
 
     <LinearLayout
         android:layout_width="match_parent"
