@@ -5,18 +5,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import org.apache.http.HttpRequestFactory;
 
 public class McDistanceFragment extends Fragment {
     private static final double MINIMUM_DISTANCE = 50.0;
+    private static final String NEARBY_SEARCH_URL =
+            "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+    private static final String NEARBY_SEARCH_TYPES = "food|restaurant";
+    private static final String NEARBY_SEARCH_NAME = "McDonald's";
+    private static final String NEARBY_SEARCH_RANKBY = "distance";
+    private static final String API_KEY = "AIzaSyBS5rTDOXDQ6sXYBDTyGYUjQpLTe1i90is";
+
 
     private int mMcDistance = 1;
     private double mDistance = 0.0;
@@ -147,5 +157,20 @@ public class McDistanceFragment extends Fragment {
 
         mStartButton.setEnabled(!started);
         mStopButton.setEnabled(started);
+    }
+
+    public void fetchPlaces() {
+        String location = mLocation.getLatitude() + "," + mLocation.getLongitude();
+
+        try {
+            String url = Uri.parse(NEARBY_SEARCH_URL).buildUpon()
+                    .appendQueryParameter("location", location)
+                    .appendQueryParameter("types", NEARBY_SEARCH_TYPES)
+                    .appendQueryParameter("name", NEARBY_SEARCH_NAME)
+                    .appendQueryParameter("rankby", NEARBY_SEARCH_RANKBY)
+                    .appendQueryParameter("key", API_KEY).build().toString();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
