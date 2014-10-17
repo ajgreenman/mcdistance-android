@@ -18,14 +18,11 @@ import android.widget.TextView;
 
 import org.apache.http.HttpRequestFactory;
 
+import java.io.IOException;
+
 public class McDistanceFragment extends Fragment {
+    private static final String TAG = "McDistanceFragment";
     private static final double MINIMUM_DISTANCE = 50.0;
-    private static final String NEARBY_SEARCH_URL =
-            "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
-    private static final String NEARBY_SEARCH_TYPES = "food|restaurant";
-    private static final String NEARBY_SEARCH_NAME = "McDonald's";
-    private static final String NEARBY_SEARCH_RANKBY = "distance";
-    private static final String API_KEY = "AIzaSyBS5rTDOXDQ6sXYBDTyGYUjQpLTe1i90is";
 
 
     private int mMcDistance = 1;
@@ -153,24 +150,21 @@ public class McDistanceFragment extends Fragment {
 
             mMcDistanceTextView.setText("McDistance: " + mMcDistance);
             mMetersTextView.setText("Meters: " + mDistance);
+
+            new FetchPlacesTask().execute();
         }
 
         mStartButton.setEnabled(!started);
         mStopButton.setEnabled(started);
     }
 
-    public void fetchPlaces() {
-        String location = mLocation.getLatitude() + "," + mLocation.getLongitude();
 
-        try {
-            String url = Uri.parse(NEARBY_SEARCH_URL).buildUpon()
-                    .appendQueryParameter("location", location)
-                    .appendQueryParameter("types", NEARBY_SEARCH_TYPES)
-                    .appendQueryParameter("name", NEARBY_SEARCH_NAME)
-                    .appendQueryParameter("rankby", NEARBY_SEARCH_RANKBY)
-                    .appendQueryParameter("key", API_KEY).build().toString();
-        } catch(Exception e) {
-            e.printStackTrace();
+
+    private class FetchPlacesTask extends AsyncTask<Void, Void, Place> {
+
+        @Override
+        protected Place doInBackground(Void... params) {
+            return new FetchPlaces().fetchPlaces(mLocation);
         }
     }
 }
