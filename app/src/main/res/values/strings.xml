@@ -3,6 +3,7 @@
 
     <string name="app_name">McDistance</string>
     <string name="mcdistance">McDistance:</string>
+    <string name="mcdistanceAddress">Address:</string>
     <string name="mcdistanceMiles">Miles:</string>
     <string name="mcdistanceFeet">Feet:</string>
     <string name="mcdistanceMeters">Meters:</string>

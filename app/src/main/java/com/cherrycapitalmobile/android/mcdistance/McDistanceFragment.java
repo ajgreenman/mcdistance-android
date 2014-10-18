@@ -24,12 +24,13 @@ public class McDistanceFragment extends Fragment {
     private static final String TAG = "McDistanceFragment";
     private static final double MINIMUM_DISTANCE = 50.0;
 
-
     private int mMcDistance = 1;
     private double mDistance = 0.0;
+    private Place mPlace = null;
     private Location mLocation, mFultonLocation;
     private McDistanceManager mMcDistanceManager;
-    private TextView mMcDistanceTextView, mMetersTextView, mLatitudeTextView, mLongitudeTextView;
+    private TextView mMcDistanceTextView, mMetersTextView, mAddressTextView,
+            mLatitudeTextView, mLongitudeTextView;
     private Button mViewMcDistanceButton, mCalculateDistanceButton, mGetDirectionsButton,
             mStartButton, mStopButton;
 
@@ -38,7 +39,6 @@ public class McDistanceFragment extends Fragment {
         @Override
         protected void onLocationReceived(Context context, Location loc) {
             mLocation = loc;
-            mDistance = mLocation.distanceTo(mFultonLocation);
 
             if(isVisible()) {
                 updateUI();
@@ -52,20 +52,17 @@ public class McDistanceFragment extends Fragment {
         setRetainInstance(true);
 
         mMcDistanceManager = McDistanceManager.get(getActivity());
-
-        mFultonLocation = new Location("Pro J");
-        mFultonLocation.setLatitude(42.96361);
-        mFultonLocation.setLongitude(-85.6974971);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mcdistance, parent, false);
 
-        mMcDistanceTextView = (TextView) v.findViewById(R.id.mcdistanceTextView);
-        mMetersTextView = (TextView) v.findViewById(R.id.metersTextView);
         mLatitudeTextView = (TextView) v.findViewById(R.id.latitudeTextView);
         mLongitudeTextView = (TextView) v.findViewById(R.id.longitudeTextView);
+        mMcDistanceTextView = (TextView) v.findViewById(R.id.mcdistanceTextView);
+        mMetersTextView = (TextView) v.findViewById(R.id.metersTextView);
+        mAddressTextView = (TextView) v.findViewById(R.id.addressTextView);
 
         mViewMcDistanceButton = (Button) v.findViewById(R.id.view_mcdistance_button);
         mViewMcDistanceButton.setOnClickListener(new View.OnClickListener() {
@@ -142,29 +139,38 @@ public class McDistanceFragment extends Fragment {
             mLatitudeTextView.setText(Double.toString(mLocation.getLatitude()));
             mLongitudeTextView.setText(Double.toString(mLocation.getLongitude()));
 
-            if(mDistance <= MINIMUM_DISTANCE) {
-                mMcDistance = 0;
-            } else {
-                mMcDistance = 1;
-            }
-
-            mMcDistanceTextView.setText("McDistance: " + mMcDistance);
-            mMetersTextView.setText("Meters: " + mDistance);
-
             new FetchPlacesTask().execute();
+
+            if(mPlace != null) {
+                mDistance = mLocation.distanceTo(mPlace.getLocation());
+
+                if(mDistance <= MINIMUM_DISTANCE) {
+                    mMcDistance = 0;
+                } else {
+                    mMcDistance = 1;
+                }
+
+                mMcDistanceTextView.setText("McDistance: " + mMcDistance);
+                mMetersTextView.setText("Meters: " + mDistance);
+                mAddressTextView.setText("Address: " + mPlace.getAddress());
+            }
         }
 
         mStartButton.setEnabled(!started);
         mStopButton.setEnabled(started);
     }
 
-
-
     private class FetchPlacesTask extends AsyncTask<Void, Void, Place> {
 
         @Override
         protected Place doInBackground(Void... params) {
             return new FetchPlaces().fetchPlaces(mLocation);
+        }
+
+        @Override
+        protected void onPostExecute(Place place) {
+            mPlace = place;
+            updateUI();
         }
     }
 }

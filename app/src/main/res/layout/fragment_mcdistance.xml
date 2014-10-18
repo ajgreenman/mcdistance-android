@@ -5,27 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/mcdistanceTextView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/mcdistance" />
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/metersTextView"
+        <TextView
+            android:id="@+id/latitudeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/latitude"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/longitudeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/longitude"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/mcdistanceMeters" />
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/mcdistanceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/mcdistance" />
+
+        <TextView
+            android:id="@+id/metersTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/mcdistanceMeters" />
+
+        <TextView
+            android:id="@+id/addressTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/mcdistanceAddress" />
+
+        </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:orientation="vertical">
 
         <Button
@@ -46,27 +83,7 @@
             android:layout_height="wrap_content"
             android:text="@string/directions" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/latitudeTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/latitude"
-                android:gravity="center" />
-
-            <TextView
-                android:id="@+id/longitudeTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/longitude"
-                android:gravity="center" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

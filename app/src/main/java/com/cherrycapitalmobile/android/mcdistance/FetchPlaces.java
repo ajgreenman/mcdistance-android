@@ -4,6 +4,10 @@ import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,8 +76,27 @@ public class FetchPlaces {
             return null;
         }
 
-        Place nearest = null;
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray places = jsonObject.getJSONArray("results");
+            JSONObject jsonNearest = places.getJSONObject(0);
 
-        return nearest;
+            JSONObject jsonLocation =
+                    jsonNearest.getJSONObject("geometry").getJSONObject("location");
+            Double lat = jsonLocation.getDouble("lat");
+            Double lng = jsonLocation.getDouble("lng");
+
+            Location loc = new Location("Google Places API");
+            loc.setLatitude(lat);
+            loc.setLongitude(lng);
+
+            String address = jsonNearest.getString("vicinity");
+
+            return new Place(loc, address);
+        } catch (JSONException je) {
+            Log.e(TAG, "Failed to parse JSON: " + je);
+        }
+
+        return null;
     }
 }
